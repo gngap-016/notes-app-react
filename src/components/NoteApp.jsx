@@ -1,6 +1,7 @@
 import React from "react";
 import { getInitialData } from "../utils/data";
 import NoteAppBody from "./NoteAppBody";
+import NoteAppHeader from "./NoteAppHeader";
 
 class NoteApp extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class NoteApp extends React.Component {
 
     this.onArchiveHandler = this.onArchiveHandler.bind(this);
     this.onDeleteHandler = this.onDeleteHandler.bind(this);
+    this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
   }
 
   onArchiveHandler(id) {
@@ -24,10 +26,28 @@ class NoteApp extends React.Component {
     this.setState({notes});
   }
 
+  onAddNoteHandler({title, body}) {
+    this.setState((prevState) => {
+      return {
+        notes: [
+          ...prevState.notes,
+          {
+            id: +new Date(),
+            title,
+            body,
+            createdAt: new Date().toISOString(),
+            archived: false,
+          }
+        ]
+      }
+    });
+  }
+
   render() {
     return (
       <>
-        <NoteAppBody notes={this.state.notes} onArchive={this.onArchiveHandler} onDelete={this.onDeleteHandler} />
+        <NoteAppHeader onChange={() => {}} />
+        <NoteAppBody notes={this.state.notes} onArchive={this.onArchiveHandler} onDelete={this.onDeleteHandler} addNote={this.onAddNoteHandler} />
       </>
     )
   }

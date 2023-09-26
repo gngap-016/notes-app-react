@@ -1,12 +1,14 @@
 import React from "react";
 import NoteList from "./NoteList";
+import NoteInput from "./NoteInput";
 
-function NoteAppBody({ notes, onArchive, onDelete }) {
+function NoteAppBody({ notes, onArchive, onDelete, addNote }) {
   const archiveNotes = notes.filter((note) => note.archived === true);
   const unArchiveNotes = notes.filter((note) => note.archived === false);
 
   return (
     <div className="note-app__body">
+      <NoteInput addNote={addNote} />
       <h2>Catatan Aktif</h2>
       { (unArchiveNotes.length > 0) 
         ? <NoteList notes={unArchiveNotes} onArchive={onArchive} onDelete={onDelete} /> 
